@@ -24,15 +24,23 @@ def data(soup):
         title = job.find('span').text.strip()
         company = job.find('span', class_='companyName').text.strip()
         location = job.find('div', class_='companyLocation').text.strip()
+        date = job.find('span', class_='date').text.strip()
         try:
             salary = job.find('div', class_='salary-snippet').text.strip()
         except:
             salary = 'salary not given'
 
         summary = (
-            f'job title: {title}\ncompany name: {company}\njob location: {location}\nsalary: {salary}\n'
+            f'job title: {title}\ncompany name: {company}\njob location: {location}\nsalary: {salary}\n{date}\n'
         )
         print(summary)
+        save_notsave = input("enter s to save or n to not save: ").lower()
+        if save_notsave == "s":
+            with open(f"savedjobs.txt", "a") as f:
+              f.write(f'{summary} \n')
+            print("\n")
+        else:
+            print("\n")
 
     return
 
